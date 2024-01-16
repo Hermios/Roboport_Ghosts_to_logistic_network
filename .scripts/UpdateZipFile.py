@@ -130,7 +130,8 @@ if not response.ok:
 
 print("publish/upload")
 upload_url = response.json()["upload_url"]
-
+if not mod_exists:
+    del data["mod"]
 with open(f"{zip_file_name}.zip", "rb") as f:
     request_body = {"file": f}
     response=requests.post(upload_url, files=request_body, data=data)
@@ -138,5 +139,5 @@ with open(f"{zip_file_name}.zip", "rb") as f:
 if not response.ok:
     print(f"upload failed: {response.text}")
     exit(1)
-    
+
 print(f"publication of mod {repo.name} successful:{response.url}")
