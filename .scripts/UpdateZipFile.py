@@ -138,4 +138,4 @@ with open(f"{zip_file_name}.zip", "rb") as f:
 if not response.ok:
     print(f"upload failed: {response.text}")
     exit(1)
-print(response)
+print(f"publication of mod ${repo.name} successful:${response.url}")
