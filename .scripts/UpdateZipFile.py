@@ -119,6 +119,7 @@ if mod_exists and readme is not None:
         exit(1)
     
 #Update url for mod exists or not
+print("init upload")
 init_end_point=f"https://mods.factorio.com/api/v2/mods/{'releases/init_upload' if mod_exists else 'init_publish'}"
 
 response = requests.post(init_end_point, data={"mod":repo.name}, headers=request_headers)
@@ -127,6 +128,7 @@ if not response.ok:
     print(f"{'init_upload' if mod_exists else 'init_publish'} failed: {response.text}")
     exit(1)
 
+print("publish/upload")
 upload_url = response.json()["upload_url"]
 
 with open(f"{zip_file_name}.zip", "rb") as f:
@@ -136,3 +138,4 @@ with open(f"{zip_file_name}.zip", "rb") as f:
 if not response.ok:
     print(f"upload failed: {response.text}")
     exit(1)
+print(response)
