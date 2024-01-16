@@ -133,9 +133,10 @@ upload_url = response.json()["upload_url"]
 
 with open(f"{zip_file_name}.zip", "rb") as f:
     request_body = {"file": f}
-    requests.post(upload_url, files=request_body, data=data)
+    response=requests.post(upload_url, files=request_body, data=data)
 
 if not response.ok:
     print(f"upload failed: {response.text}")
     exit(1)
-print(f"publication of mod ${repo.name} successful:${response.url}")
+    
+print(f"publication of mod {repo.name} successful:{response.url}")
