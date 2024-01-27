@@ -31,7 +31,7 @@ function roboport:update_ghost(ghost,add)
     parameters=self.sender.get_or_create_control_behavior().parameters
     for i,parameter in pairs(parameters) do
         if parameter.signal.type=="item" and parameter.signal.name==signal.name then
-            parameter.count=parameter.count+(add and 1 or -1)
+            parameter.count=parameter.count+(add and -1 or 1)
             if parameter.count==0 then
                 parameter=nil
             end
