@@ -5,5 +5,4 @@ end
 
 for _,roboport_entity in pairs(game.get_surface(1).find_entities_filtered{type="roboport"}) do
     global.custom_entities[roboport_entity.unit_number]=roboport:new(roboport_entity)
-    global.custom_entities[roboport_entity.unit_number]:on_built()
 end

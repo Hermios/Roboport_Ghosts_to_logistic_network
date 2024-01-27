@@ -1,4 +1,4 @@
-require "__HermiosLibs__.control-libs"
+require "__Hermios_Framework__.control-libs"
 require "constants"
 require "prototypes.roboport"
 
