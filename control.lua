@@ -2,7 +2,7 @@ require "__HermiosLibs__.control-libs"
 require "constants"
 require "prototypes.roboport"
 
-function mod_on_built(entity)
+table.insert(list_events.on_built,function(entity)
     for _,roboport_entity in pairs(game.get_surface(1).find_entities_filtered{type="roboport",position=entity.position,radius=global.max_construction_radius}) do
         if global.custom_entities[roboport_entity.unit_number] then
             if entity.type=="entity-ghost" then
@@ -12,17 +12,17 @@ function mod_on_built(entity)
             end
         end
     end
-end
+end)
 
-function on_post_entity_died(event)
+table.insert(list_events.on_post_entity_died,function(event)
     for _,roboport_entity in pairs(game.get_surface(1).find_entities_filtered{type="roboport",position=event.ghost.position,radius=global.max_construction_radius}) do
         if global.custom_entities[roboport_entity.unit_number] then
             global.custom_entities[roboport_entity.unit_number]:update_ghost(event.ghost,true)
         end
     end
-end
+end)
 
-function mod_on_removed(entity)
+table.insert(list_events.on_removed,function(entity)
     if entity.type=="entity-ghost" then
         for _,roboport_entity in pairs(game.get_surface(1).find_entities_filtered{type="roboport",position=entity.position,radius=global.max_construction_radius}) do
             if global.custom_entities[roboport_entity.unit_number] then
@@ -30,4 +30,4 @@ function mod_on_removed(entity)
             end
         end
     end
-end
+end)
