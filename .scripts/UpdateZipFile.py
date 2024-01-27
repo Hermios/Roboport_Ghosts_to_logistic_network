@@ -61,7 +61,7 @@ info_json={
   "version": os.environ['RELEASE_VERSION'],
   "title": repo.get_variable("MOD_TITLE").value,
   "author": repo.get_variable("MOD_AUTHOR").value,
-  "homepage": repo.url,
+  "homepage": repo.html_url,
   "dependencies": mod_dependancies,
   "description": repo.get_variable("MOD_DESCRIPTION").value,
   "factorio_version": factorio_version
@@ -104,7 +104,7 @@ data={
     "description": readme,
     "category":os.getenv("MOD_CATEGORY"),
     "license":os.getenv("MOD_LICENCE"),
-    "source_url":repo.url
+    "source_url":repo.html_url
 }
 
 #Does mod exits
@@ -128,10 +128,11 @@ if not response.ok:
     print(f"{'init_upload' if mod_exists else 'init_publish'} failed: {response.text}")
     exit(1)
 
-print("publish/upload")
 upload_url = response.json()["upload_url"]
 if not mod_exists:
     del data["mod"]
+
+print("publish/upload")
 with open(f"{zip_file_name}.zip", "rb") as f:
     request_body = {"file": f}
     response=requests.post(upload_url, files=request_body, data=data)

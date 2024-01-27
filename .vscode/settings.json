@@ -27,7 +27,8 @@
 		"__DebugAdapter",
 		"__Profiler",
 		"custom_prototypes",
-		"createdata"
+		"createdata",
+		"list_events"
 	],
 	"Lua.workspace.ignoreDir": [
 			".vscode",
