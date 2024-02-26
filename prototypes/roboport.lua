@@ -44,9 +44,13 @@ function roboport:update_ghost(ghost,add)
     end
     if add  then
         if first_emptyindex then
-            self.sender.get_or_create_control_behavior().set_signal(first_emptyindex,{signal=signal,count=1})
+            self.sender.get_or_create_control_behavior().set_signal(first_emptyindex,{signal=signal,count=-1})
         else
            game.get_user(1).print({"NO_SLOT_AVAILABLE"})
         end
     end
+end
+
+function roboport:on_removed()
+    self.sender.destroy()
 end
