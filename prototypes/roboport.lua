@@ -50,3 +50,7 @@ function roboport:update_ghost(ghost,add)
         end
     end
 end
+
+function roboport:on_removed()
+    self.sender.destroy()
+end
