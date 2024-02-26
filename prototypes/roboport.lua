@@ -26,7 +26,7 @@ function roboport:update_all()
 end
 
 function roboport:update_ghost(ghost,add)
-    signal={type="item",name=ghost.ghost_name}
+    signal={type="item",name=ghost.ghost_prototype.mineable_properties.products[1].name}
     first_emptyindex=nil
     parameters=self.sender.get_or_create_control_behavior().parameters
     for i,parameter in pairs(parameters) do
