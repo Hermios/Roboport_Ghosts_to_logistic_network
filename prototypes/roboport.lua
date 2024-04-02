@@ -42,7 +42,6 @@ function roboport:update_ghost(ghost,add)
             first_emptyindex=parameter.index
         end
     end
-    
     if add  then
         if first_emptyindex then
             self.sender.get_or_create_control_behavior().set_signal(first_emptyindex,{signal=signal,count=-1})
