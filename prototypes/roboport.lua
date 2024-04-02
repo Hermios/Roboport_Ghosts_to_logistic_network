@@ -20,34 +20,24 @@ end
 
 function roboport:update_all()
     self.sender.get_or_create_control_behavior().parameters=nil
-    for _,ghost in pairs(game.get_surface(1).find_entities_filtered{type="entity-ghost",position=self.entity.position,radius=self.entity.prototype.construction_radius}) do
-       self:update_ghost(ghost,true)
-    end
-end
-
-function roboport:update_ghost(ghost,add)
-    signal={type="item",name=ghost.ghost_prototype.mineable_properties.products[1].name}
-    first_emptyindex=nil
-    parameters=self.sender.get_or_create_control_behavior().parameters
-    for i,parameter in pairs(parameters) do
-        if parameter.signal.type=="item" and parameter.signal.name==signal.name then
-            parameter.count=parameter.count+(add and -1 or 1)
-            if parameter.count==0 then
-                parameter=nil
+    local parameters={}
+    for _,entity in pairs(game.get_surface(1).find_entities_filtered{type={"item-request-proxy","entity-ghost"},position=self.entity.position,radius=self.entity.prototype.construction_radius}) do
+        if  entity.type=="entity-ghost" and entity.ghost_prototype.mineable_properties.products then
+            signal=entity.ghost_prototype.mineable_properties.products[1].name
+            parameters[signal]=(parameters[signal] or 0) + 1
+        elseif entity.type=="item-request-proxy" then
+            for module,count in pairs(entity.item_requests) do
+                parameters[module]=(parameters[module] or 0) + count
             end
-            parameters[i]=parameter
-            self.sender.get_or_create_control_behavior().parameters=parameters
-            return
-        elseif not first_emptyindex and not parameter.signal.signal then
-            first_emptyindex=parameter.index
         end
     end
-    if add  then
-        if first_emptyindex then
-            self.sender.get_or_create_control_behavior().set_signal(first_emptyindex,{signal=signal,count=-1})
-        else
-           game.get_user(1).print({"NO_SLOT_AVAILABLE"})
+    local i=1
+    for signal,count in pairs(parameters) do
+        if i>20 then
+            return
         end
+        self.sender.get_or_create_control_behavior().set_signal(i,{signal={type="item",name=signal},count=-1*count})
+        i=i+1
     end
 end
 
