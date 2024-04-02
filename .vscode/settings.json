@@ -87,7 +87,8 @@
 		}
 	],
 	"Lua.workspace.userThirdParty": [
-		"c:\\Users\\Nicolas Blexmann\\AppData\\Roaming\\Code\\User\\workspaceStorage\\a7e8e735945af2e6e388b2ac74e23b07\\justarandomgeek.factoriomod-debug\\sumneko-3rd"
+		"c:\\Users\\Nicolas Blexmann\\AppData\\Roaming\\Code\\User\\workspaceStorage\\a7e8e735945af2e6e388b2ac74e23b07\\justarandomgeek.factoriomod-debug\\sumneko-3rd",
+		"c:\\Users\\Nicolas Blexmann\\AppData\\Roaming\\Code\\User\\workspaceStorage\\e834f07cd2e5bc374b12352c92cd760b\\justarandomgeek.factoriomod-debug\\sumneko-3rd"
 	],
 	"Lua.workspace.checkThirdParty": "ApplyInMemory"
 }
