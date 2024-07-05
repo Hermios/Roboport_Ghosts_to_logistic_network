@@ -21,18 +21,26 @@ end
 function roboport:update_all()
     self.sender.get_or_create_control_behavior().parameters=nil
     local parameters={}
-    for _,entity in pairs(game.get_surface(1).find_entities_filtered{type={"item-request-proxy","entity-ghost","cliff"},position=self.entity.position,radius=self.entity.prototype.construction_radius}) do
+    for _,entity in pairs(game.get_surface(1).find_entities_filtered{type={"tile-ghost","item-request-proxy","entity-ghost"},position=self.entity.position,radius=self.entity.prototype.construction_radius}) do
         if  entity.type=="entity-ghost" and entity.ghost_prototype.mineable_properties.products then
             signal=entity.ghost_prototype.mineable_properties.products[1].name
+            parameters[signal]=(parameters[signal] or 0) + 1
+        elseif  entity.type=="tile-ghost" then
+            signal=entity.ghost_name
             parameters[signal]=(parameters[signal] or 0) + 1
         elseif entity.type=="item-request-proxy" then
             for module,count in pairs(entity.item_requests) do
                 parameters[module]=(parameters[module] or 0) + count
             end
-        elseif entity.type=="cliff" and entity.to_be_deconstructed() then
-            local signal=entity.prototype.cliff_explosive_prototype
-            parameters[signal]=(parameters[signal] or 0) + 1
         end
+    end
+    for _,entity in pairs(game.get_surface(1).find_entities_filtered{type={"cliff"},to_be_deconstructed=true,position=self.entity.position,radius=self.entity.prototype.construction_radius}) do
+        local signal=entity.prototype.cliff_explosive_prototype
+        parameters[signal]=(parameters[signal] or 0) + 1
+    end
+    for _,entity in pairs(game.get_surface(1).find_entities_filtered{to_be_upgraded=true,position=self.entity.position,radius=self.entity.prototype.construction_radius}) do
+        local signal=entity.get_upgrade_target().name
+        parameters[signal]=(parameters[signal] or 0) + 1
     end
     local i=1
     for signal,count in pairs(parameters) do
