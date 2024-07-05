@@ -28,6 +28,14 @@ table.insert(list_events.on_marked_for_deconstruction,function (event)
     end
 end)
 
+table.insert(list_events.on_marked_for_upgrade,function (event)
+    for _,roboport_entity in pairs(game.get_surface(1).find_entities_filtered{type="roboport",position=event.entity.position,radius=global.max_construction_radius}) do
+        if global.custom_entities[roboport_entity.unit_number] then
+            global.custom_entities[roboport_entity.unit_number]:update_all()
+        end
+    end
+end)
+
 table.insert(list_events.on_post_entity_died,function(event)
     if not event.ghost then
         return
